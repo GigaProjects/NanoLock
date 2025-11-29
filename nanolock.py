@@ -61,7 +61,7 @@ def main():
 
         try:
             decoded_data = base64.urlsafe_b64decode(encrypted_input)
-            if len(decoded_data) < 16:
+            if len(decoded_data) <= 16:
                 raise ValueError("Invalid data")
 
             salt, token = decoded_data[:16], decoded_data[16:]
@@ -83,3 +83,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nBye!")
         sys.exit(0)
+
