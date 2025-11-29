@@ -1,6 +1,6 @@
 # NanoLock
 
-**NanoLock** is a minimalist, ultra-secure command-line tool for symmetric text encryption. 
+**NanoLock** is a minimalist, ultra-secure command-line tool for symmetric text encryption and decryption.
 
 It combines **Argon2id** (for robust key derivation) and **Fernet** (AES-128-CBC + HMAC-SHA256) to provide state-of-the-art security in under 100 lines of code. Its brevity makes it **easily auditable**—you can read and verify the entire logic in one minute.
 
