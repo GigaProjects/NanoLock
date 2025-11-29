@@ -12,7 +12,7 @@ def get_key(password: bytes, salt: bytes) -> bytes:
         secret=password,
         salt=salt,
         time_cost=4,          # 4 passes over memory
-        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB) on weak machines
+        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB) 262144 (256 MiB) or even to 65536 (64 MiB) on weak machines
         parallelism=4,        # use 4 cores
         hash_len=32,
         type=Type.ID,         # Argon2id = most secure variant
@@ -21,7 +21,13 @@ def get_key(password: bytes, salt: bytes) -> bytes:
 
 
 def main():
-    print("=== Ultra-Secure Text Encryption Tool (Argon2id + Fernet) ===")
+    print(r"""
+ _   _                   _               _    
+| \ | | __ _ _ __   ___ | |    ___   ___| | __
+|  \| |/ _` | '_ \ / _ \| |   / _ \ / __| |/ /
+| |\  | (_| | | | | (_) | |__| (_) | (__|   < 
+|_| \_|\__,_|_| |_|\___/|_____\___/ \___|_|\_\                                               
+    """)
     mode = input("Select -> (E)ncrypt or (D)ecrypt: ").strip().upper()
 
     if mode not in ["E", "D"]:
@@ -49,7 +55,6 @@ def main():
         result = base64.urlsafe_b64encode(salt + token)
         print("\nENCRYPTED OUTPUT (copy this entire line):")
         print(result.decode())
-        print("\n(This uses Argon2id with 1 GiB memory – extremely strong)")
 
     elif mode == "D":
         encrypted_input = input("Paste encrypted text: ").strip()
