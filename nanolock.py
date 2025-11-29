@@ -6,13 +6,13 @@ from cryptography.fernet import Fernet, InvalidToken
 from argon2.low_level import hash_secret_raw, Type
 
 
-def get_key(password: bytes, salt: bytes) -> bytes:
-    """Derive a Fernet key using Argon2id (2025 best practice)"""
+def get_key(password, salt):
+    """Derive a Fernet key using Argon2id"""
     key = hash_secret_raw(
         secret=password,
         salt=salt,
         time_cost=4,          # 4 passes over memory
-        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB) 262144 (256 MiB) or even to 65536 (64 MiB) on weak machines
+        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB) 262144 (256 MiB) or even to 65536 (64 MiB) on weak devices
         parallelism=4,        # use 4 cores
         hash_len=32,
         type=Type.ID,         # Argon2id = most secure variant
@@ -53,7 +53,7 @@ def main():
         token = Fernet(key).encrypt(text)
 
         result = base64.urlsafe_b64encode(salt + token)
-        print("\nENCRYPTED OUTPUT (copy this entire line):")
+        print("\nENCRYPTED OUTPUT:")
         print(result.decode())
 
     elif mode == "D":
@@ -83,4 +83,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nBye!")
         sys.exit(0)
-
