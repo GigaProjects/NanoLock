@@ -12,7 +12,7 @@ def get_key(password, salt):
         secret=password,
         salt=salt,
         time_cost=4,          # 4 passes over memory
-        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB), 262144 (256 MiB) or to 65536 (64 MiB) for very weak devices
+        memory_cost=1048576,  # 1 GiB – adjust down to 524288 (512 MiB), 262144 (256 MiB) or even to 65536 (64 MiB) on weak devices
         parallelism=4,        # use 4 cores
         hash_len=32,
         type=Type.ID,         # Argon2id = most secure variant
@@ -34,7 +34,6 @@ def main():
         print("Invalid mode.")
         return
 
-    # Ask password AFTER mode so we can confirm only on encryption
     password = getpass.getpass("Enter password: ").encode()
     if not password:
         print("Password cannot be empty.")
@@ -83,4 +82,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nBye!")
         sys.exit(0)
-
